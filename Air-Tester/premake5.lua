@@ -1,6 +1,7 @@
 project "Air-Test"
-	kind "StaticLib"
+	kind "ConsoleApp"
 	language "C++"
+	cppdialect "C++17"
 	staticruntime "On"
 
 	files {"**.hpp", "**.cpp"}
