@@ -7,3 +7,4 @@ workspace "Air-Tester"
 outputdir = "%{cfg.buildcfg}/%{cfg.system}/%{cfg.architecture}/"
 
 include "Air-Tester"
+include "Sandbox"
