@@ -9,6 +9,7 @@ TEST(simple_tests, equal) {
 }
 
 int main(int argc, char **argv) {
+	AIRTEST_RUN_ALL();
 	AIRTEST_TEST_CLASS_NAME(simple_tests, equal) test;
 	test.TestBody();
 	return 0;
