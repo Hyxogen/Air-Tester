@@ -18,6 +18,10 @@ project "Air-Test"
 	targetdir ("${wks.location}" .. outputdir .. "%{prj.name}")
 	objdir ("${wks.location}" .. outputdir .. "%{prj.name}/int")
 
+	defines {
+		"AIR_TRACK_MEMORY"
+	}
+
 	filter "files:**.c"
 		language "C"
 		cdialect "gnu17"

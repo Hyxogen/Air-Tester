@@ -14,7 +14,7 @@ linked_list_t *get_last_element(linked_list_t *linkedList);
 
 linked_list_t *find_first_element(linked_list_t *list, bool_t (*equal)(const void *, const void *), const void *sample);
 
-void add_back_element(linked_list_t **list, linked_list_t *element);
+void add_element_back(linked_list_t **list, linked_list_t *element);
 
 void remove_elements(linked_list_t **list, bool_t (*equal)(const void *, const void *), const void *sample);
 

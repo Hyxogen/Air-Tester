@@ -33,6 +33,8 @@ struct ExecuteTest {
 #define AIR_RUN_ALL_TESTS_() ForEach<ExecuteTest, GET_VECTOR_TYPES()>()()
 
 #define AIR_TEST_UNFREED_MEM(function, function_str, bytes, fail, file, line) \
+    clear_tracked_memory();                                                  \
+    function;                                                                          \
 	if (get_unfreed_count() == bytes)                                             \
 		;\
 	else\

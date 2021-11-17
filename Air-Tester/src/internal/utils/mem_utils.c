@@ -2,6 +2,7 @@
 #include "mem_utils.h"
 #include "linked_list.h"
 #include "assert.h"
+#include <stdio.h>
 
 static linked_list_t *g_linked_list = NULL;
 
@@ -23,6 +24,7 @@ void free(void* ptr) {
 #endif
 
 void *malloc_internal(size_t size) {
+
 	static void* (*libc_malloc)(size_t) = NULL;
 	if (!libc_malloc)
 		libc_malloc = dlsym(RTLD_NEXT, "malloc");
@@ -38,4 +40,8 @@ void free_internal(void* ptr) {
 
 size_t get_unfreed_count() {
 	return get_size(g_linked_list);
+}
+
+void clear_tracked_memory() {
+	clear_list(&g_linked_list);
 }

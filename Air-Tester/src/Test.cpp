@@ -1,6 +1,12 @@
 #include "AirTester.h"
 #include <iostream>
 
+//#define AIR_TRACK_MEMORY
+
+extern "C" {
+#include "mem_leak.h"
+}
+
 TEST(simple_tests, equal) {
 	std::cout << "Test!" << std::endl;
 	EXPECT_TRUE(true == true);
@@ -9,13 +15,12 @@ TEST(simple_tests, equal) {
 	EXPECT_FALSE(true == false);
 	EXPECT_EQUAL(5, 6);
 	EXPECT_EQUAL(5, 5);
-	EXPECT_NO_C_LEAK()
+	EXPECT_NO_C_LEAK(function_that_leaks())
 }
 
 TEST(simple_tests, other) {
 	std::cout << "Other!" << std::endl;
 }
-
 
 int main(int argc, char **argv) {
 	(void)argc;

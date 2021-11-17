@@ -5,7 +5,7 @@
 linked_list_t *create_element(void *content) {
 	linked_list_t *ret;
 
-	ret = malloc(sizeof(linked_list_t));
+	ret = malloc_internal(sizeof(linked_list_t));
 	if (!ret)
 		return (NULL);
 	ret->m_Content = content;
@@ -31,7 +31,7 @@ linked_list_t *find_first_element(linked_list_t *list, bool_t (*equal)(const voi
 	return (NULL);
 }
 
-void add_back_element(linked_list_t **list, linked_list_t *element) {
+void add_element_back(linked_list_t **list, linked_list_t *element) {
 	if (!*list) {
 		*list = element;
 		return;
@@ -87,6 +87,7 @@ void clear_list(linked_list_t **list) {
 		free(*list);
 		*list = tmp;
 	}
+	*list = NULL;
 }
 
 void clear_list_full(linked_list_t **list, void (*clear)(void *)) {
