@@ -10,6 +10,8 @@
 #define EXPECT_TRUE(condition) AIR_EXPECT_TRUE(condition, __FILE__, __LINE__)
 #define EXPECT_FALSE(condition) AIR_EXPECT_FALSE(condition, __FILE__, __LINE__)
 
+//Moet hier toch miss templates voor gebruiken ivm strings
+//TODO tests for strings
 #define EXPECT_EQUAL(val1, val2) AIR_EXPECT_EQUAL(val1, val2, __FILE__, __LINE__)
 
 #define EXPECT_NO_C_LEAK(function) AIR_EXPECT_NO_C_LEAK(function, __FILE__, __LINE__)
