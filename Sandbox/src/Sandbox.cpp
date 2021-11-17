@@ -2,100 +2,57 @@
 #include <string>
 #include <typeinfo>
 
-template<class Current, typename Next>
-struct Node {
-	typedef Current current;
-	typedef Next next;
+#define MAX_TESTS 10
+
+template<int val>
+struct Rank : Rank<val - 1> {
+
 };
 
-struct End;
+template<>
+struct Rank<0> {
 
-template<typename List, class Current>
-struct PushBack {
-	typedef Node<Current, List> staticList;
 };
 
-template<typename List, class Element>
-struct PushFront;
-
-template<typename New>
-struct PushFrontLast {
-	using staticList = Node<New, End>;
-//	typedef Node<New, End> staticList;
+template<class... Tests>
+struct TestList {
+	static const int size = sizeof...(Tests);
 };
 
-template<class Element, class New>
-struct PushFront<Node<Element, End>, New> {
-	using type = Node<Element, typename PushFrontLast<New>::staticList>;
+template<class Test, typename List>
+struct Append;
+
+template<class Test, class... List>
+struct Append<Test, TestList<List...>> {
+	using value_type = TestList<Test, List...>;
 };
 
-template<class Current, class New, typename Next>
-struct PushFront<Node<Current, Next>, New> {
-	using type = Node<Current, PushFront<Next, New>>;
+TestList<> GetTests(Rank<0>) { return {}; }
+
+#define GET_REGISTERED_TESTS													\
+	decltype(GetTests(Rank<MAX_TESTS>()))
+
+#define REGISTER_TEST(test)														\
+	inline Append<Test1, GET_REGISTERED_TESTS>::value_type						\
+		GetTests(Rank<GET_REGISTERED_TESTS::size + 1>)							\
+		{																		\
+			return {};															\
+		}
+
+
+
+class Test1 {
+
 };
+REGISTER_TEST(Test1)
 
-template<typename List, template<typename T> class Function>
-struct ForEach;
+class Test2 {
 
-template<typename Current, typename Next, template<typename T> class Function>
-struct ForEach<Node<Current, Next>, Function> {
-	void operator()() {
-		Function<Current>()();
-		ForEach<Next, Function>()();
-	}
 };
-
-template<typename Current, template<typename T> class Function>
-struct ForEach<Node<Current, End>, Function> {
-	void operator()() {
-		Function<Current>()();
-	}
-};
-
-template<typename Type>
-struct Function {
-	void operator()() {
-		Type type;
-		type.Test();
-		std::cout << "Elements!" << typeid(Type).name() << std::endl;
-	}
-};
-
-struct Empty {
-	void Test() {
-		std::cout << "Test Empty!" << std::endl;
-	}
-};
-struct NotEmpty {
-	void Test() {
-		std::cout << "Test NotEmpty!" << std::endl;
-	}
-};
-
-struct TestClass {
-	void Test() {
-		std::cout << "Test TestClass!" << std::endl;
-	}
-};
-
-template<typename Element>
-struct GetLast;
-
-template<class Value, typename Next>
-struct GetLast<Node<Value, Next>> {
-	using value_type = typename GetLast<Next>::value_type;
-};
-
-template<class Value>
-struct GetLast<Node<Value, End>> {
-	using value_type = Value;
-};
-
-typedef PushBack<End, Empty>::staticList node1;
-typedef PushBack<node1, NotEmpty>::staticList node2;
+REGISTER_TEST(Test2)
 
 int main(int argc, char **argv) {
-	ForEach<node2, Function>()();
-	Function<GetLast<node2>::value_type>()();
-//	Function<PushFront<node2, TestClass>::type>()();
+//	std::cout << typeid(GET_REGISTERED_TESTS).name() << std::endl;
+	std::cout << GET_REGISTERED_TESTS::size << std::endl;
+//	std::cout << std::endl;
 }
