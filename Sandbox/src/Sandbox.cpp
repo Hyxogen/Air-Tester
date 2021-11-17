@@ -68,9 +68,12 @@ struct Function {
 	}
 };
 
+#define EXPECT_TRUE(condition) std::cout << #condition << std::endl;
+
 int main(int argc, char **argv) {
 //	std::cout << typeid(GET_REGISTERED_TESTS).name() << std::endl;
 //	std::cout << GET_VECTOR_TYPES()::size << std::endl;
-	ForEach<Function, GET_VECTOR_TYPES()>()();
+//	ForEach<Function, GET_VECTOR_TYPES()>()();
 //	std::cout << std::endl;
+	EXPECT_TRUE(1 == 1);
 }

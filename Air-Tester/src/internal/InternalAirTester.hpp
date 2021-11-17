@@ -1,7 +1,11 @@
 #ifndef INTERNALAIRTESTER_H
 #define INTERNALAIRTESTER_H
 #include <iostream>
-#include "Vector.h"
+#include "Vector.hpp"
+
+extern "C" {
+#include "utils/mem_utils.h"
+};
 
 #define AIR_NONFATAL_FAIL(message) \
 	std::cout << message << std::endl;
@@ -27,6 +31,12 @@ struct ExecuteTest {
 };
 
 #define AIR_RUN_ALL_TESTS_() ForEach<ExecuteTest, GET_VECTOR_TYPES()>()()
+
+#define AIR_TEST_UNFREED_MEM(function, function_str, bytes, fail, file, line) \
+	if (get_unfreed_count() == bytes)                                             \
+		;\
+	else\
+		fail("Failed test. Expected " #bytes " bytes of unfreed memory. Actual TO BE FILLED IN")
 
 #define AIR_TEST_EQUAL(val1, val1_str, val2, val2_str, fail, file, line) \
 	if (val1 == val2) \
