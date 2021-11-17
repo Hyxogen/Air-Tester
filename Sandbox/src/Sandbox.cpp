@@ -2,43 +2,37 @@
 #include <string>
 #include <typeinfo>
 
-template<class Current, typename Next>
-struct Node {
-	typedef Current current;
-	typedef Next next;
+template<class Type, typename NextType>
+struct TestNode {
+	using Test = Type;
+	using Next = NextType;
 };
 
-struct End;
+struct EndNode;
 
-template<typename List, class Current>
-struct PushBack {
-	typedef Node<Current, List> staticList;
+template<typename List, class Test>
+struct PushBack;
+
+template<class Next>
+struct PushBackLast {
+	using type = TestNode<Next, EndNode>;
 };
 
-template<typename List, class Element>
-struct PushFront;
-
-template<typename New>
-struct PushFrontLast {
-	using staticList = Node<New, End>;
-//	typedef Node<New, End> staticList;
+template<class Current, typename Next, class Test>
+struct PushBack<TestNode<Current, Next>, Test> {
+	using staticList = TestNode<Current, typename PushBack<Next, Test>::staticList>;
 };
 
-template<class Element, class New>
-struct PushFront<Node<Element, End>, New> {
-	using type = Node<Element, typename PushFrontLast<New>::staticList>;
-};
-
-template<class Current, class New, typename Next>
-struct PushFront<Node<Current, Next>, New> {
-	using type = Node<Current, PushFront<Next, New>>;
+template<class Current, class Next>
+struct PushBack<TestNode<Current, EndNode>, Next> {
+	using staticList = TestNode<Current, typename PushBackLast<Next>::type>;
 };
 
 template<typename List, template<typename T> class Function>
 struct ForEach;
 
 template<typename Current, typename Next, template<typename T> class Function>
-struct ForEach<Node<Current, Next>, Function> {
+struct ForEach<TestNode<Current, Next>, Function> {
 	void operator()() {
 		Function<Current>()();
 		ForEach<Next, Function>()();
@@ -46,7 +40,7 @@ struct ForEach<Node<Current, Next>, Function> {
 };
 
 template<typename Current, template<typename T> class Function>
-struct ForEach<Node<Current, End>, Function> {
+struct ForEach<TestNode<Current, EndNode>, Function> {
 	void operator()() {
 		Function<Current>()();
 	}
@@ -55,47 +49,25 @@ struct ForEach<Node<Current, End>, Function> {
 template<typename Type>
 struct Function {
 	void operator()() {
-		Type type;
-		type.Test();
 		std::cout << "Elements!" << typeid(Type).name() << std::endl;
 	}
 };
 
 struct Empty {
-	void Test() {
-		std::cout << "Test Empty!" << std::endl;
-	}
 };
 struct NotEmpty {
-	void Test() {
-		std::cout << "Test NotEmpty!" << std::endl;
-	}
 };
 
 struct TestClass {
-	void Test() {
-		std::cout << "Test TestClass!" << std::endl;
-	}
 };
 
-template<typename Element>
-struct GetLast;
-
-template<class Value, typename Next>
-struct GetLast<Node<Value, Next>> {
-	using value_type = typename GetLast<Next>::value_type;
-};
-
-template<class Value>
-struct GetLast<Node<Value, End>> {
-	using value_type = Value;
-};
-
-typedef PushBack<End, Empty>::staticList node1;
-typedef PushBack<node1, NotEmpty>::staticList node2;
+typedef TestNode<Empty, EndNode> list;
+typedef PushBack<list, TestClass>::staticList node1;
+//typedef PushBack<list, NotEmpty>::staticList node2;
+//typedef PushBack<list, TestClass>::staticList node3;
 
 int main(int argc, char **argv) {
-	ForEach<node2, Function>()();
-	Function<GetLast<node2>::value_type>()();
+	ForEach<node1, Function>()();
+//	Function<GetLast<node2>::value_type>()();
 //	Function<PushFront<node2, TestClass>::type>()();
 }
