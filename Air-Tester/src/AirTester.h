@@ -5,7 +5,10 @@
 
 #define TEST(group, test) AIR_TEST(group, test)
 
-#define AIR_TEST(group, test) AIRTEST_TEST_(group, test, Test)
+#define RUN_ALL_TESTS() AIR_RUN_ALL_TESTS()
 
-#define TEST(group, test) AIR_TEST(group, test)
+#define AIR_TEST(group, test) AIR_TEST_(group, test, Test)
+
+#define AIR_RUN_ALL_TESTS() AIR_RUN_ALL_TESTS_()
+
 #endif //AIRTESTER_H

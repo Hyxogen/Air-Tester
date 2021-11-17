@@ -1,21 +1,27 @@
-//
-// Created by Daan Meijer on 11/11/21.
-//
-
 #ifndef INTERNALAIRTESTER_H
 #define INTERNALAIRTESTER_H
 #include "Vector.h"
 
-#define AIRTEST_TEST_CLASS_NAME(group, test) group##_##test##_test
+#define AIR_TEST_CLASS_NAME(group, test) group##_##test##_test
 
-#define AIRTEST_TEST_(group, test, parent)										\
-class AIRTEST_TEST_CLASS_NAME(group, test) : public parent {					\
+#define AIR_TEST_(group, test, parent)											\
+class AIR_TEST_CLASS_NAME(group, test) : public parent {						\
 public:																			\
-        AIRTEST_TEST_CLASS_NAME(group, test)() = default;						\
-        ~AIRTEST_TEST_CLASS_NAME(group, test)() = default;						\
+        AIR_TEST_CLASS_NAME(group, test)() = default;							\
+        ~AIR_TEST_CLASS_NAME(group, test)() = default;							\
         																		\
         void TestBody() override;												\
 };																				\
-ADD_VECTOR_ELEMENT(AIRTEST_TEST_CLASS_NAME(group, test))						\
-void AIRTEST_TEST_CLASS_NAME(group, test)::TestBody()
+ADD_VECTOR_ELEMENT(AIR_TEST_CLASS_NAME(group, test))							\
+void AIR_TEST_CLASS_NAME(group, test)::TestBody()
+
+template<class Type>
+struct ExecuteTest {
+	void operator()() {
+		Type().TestBody();
+	}
+};
+
+#define AIR_RUN_ALL_TESTS_() ForEach<ExecuteTest, GET_VECTOR_TYPES()>()()
+
 #endif //INTERNALAIRTESTER_H

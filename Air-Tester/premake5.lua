@@ -4,7 +4,7 @@ project "Air-Test"
 	cppdialect "C++17"
 	staticruntime "On"
 
-	files {"**.hpp", "**.cpp"}
+	files {"**.h", "**.cpp"}
 
 	targetdir ("${wks.location}" .. outputdir .. "%{prj.name}")
 	objdir ("${wks.location}" .. outputdir .. "%{prj.name}/int")

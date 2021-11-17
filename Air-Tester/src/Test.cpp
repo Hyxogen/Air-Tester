@@ -8,9 +8,15 @@ TEST(simple_tests, equal) {
 	std::cout << "Test!" << std::endl;
 }
 
+TEST(simple_tests, other) {
+	std::cout << "Other!" << std::endl;
+}
+
+
 int main(int argc, char **argv) {
-	AIRTEST_RUN_ALL();
-	AIRTEST_TEST_CLASS_NAME(simple_tests, equal) test;
-	test.TestBody();
+	RUN_ALL_TESTS();
+//	AIR_RUN_ALL_TESTS_();
+//	AIRTEST_TEST_CLASS_NAME(simple_tests, equal) test;
+//	test.TestBody();
 	return 0;
 }
