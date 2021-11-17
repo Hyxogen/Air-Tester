@@ -1,11 +1,14 @@
-//
-// Created by Daan Meijer on 11/11/21.
-//
 #include "AirTester.h"
 #include <iostream>
 
 TEST(simple_tests, equal) {
 	std::cout << "Test!" << std::endl;
+	EXPECT_TRUE(true == true);
+	EXPECT_TRUE(false == true);
+	EXPECT_FALSE(false == false);
+	EXPECT_FALSE(true == false);
+	EXPECT_EQUAL(5, 6);
+	EXPECT_EQUAL(5, 5);
 }
 
 TEST(simple_tests, other) {

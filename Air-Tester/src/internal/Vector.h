@@ -1,7 +1,3 @@
-//
-// Created by Daan Meijer on 11/17/21.
-//
-
 #ifndef VECTOR_H
 #define VECTOR_H
 
