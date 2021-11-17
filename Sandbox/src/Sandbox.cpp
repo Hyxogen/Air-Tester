@@ -10,9 +10,6 @@ struct Node {
 
 struct End;
 
-
-
-
 template<typename List, class Current>
 struct PushBack {
 	typedef Node<Current, List> staticList;
@@ -37,9 +34,6 @@ struct PushFront<Node<Current, Next>, New> {
 	using type = Node<Current, PushFront<Next, New>>;
 };
 
-
-
-
 template<typename List, template<typename T> class Function>
 struct ForEach;
 
@@ -61,19 +55,27 @@ struct ForEach<Node<Current, End>, Function> {
 template<typename Type>
 struct Function {
 	void operator()() {
+		Type type;
+		type.Test();
 		std::cout << "Elements!" << typeid(Type).name() << std::endl;
 	}
 };
 
 struct Empty {
-
+	void Test() {
+		std::cout << "Test Empty!" << std::endl;
+	}
 };
 struct NotEmpty {
-
+	void Test() {
+		std::cout << "Test NotEmpty!" << std::endl;
+	}
 };
 
 struct TestClass {
-
+	void Test() {
+		std::cout << "Test TestClass!" << std::endl;
+	}
 };
 
 template<typename Element>
@@ -93,7 +95,7 @@ typedef PushBack<End, Empty>::staticList node1;
 typedef PushBack<node1, NotEmpty>::staticList node2;
 
 int main(int argc, char **argv) {
-//	ForEach<node2, Function>()();
-//	Function<GetLast<node2>::value_type>()();
-	Function<PushFront<node2, TestClass>::type>()();
+	ForEach<node2, Function>()();
+	Function<GetLast<node2>::value_type>()();
+//	Function<PushFront<node2, TestClass>::type>()();
 }

@@ -1,7 +1,7 @@
 project "Sandbox"
 	kind "ConsoleApp"
 	language "C++"
-	cppdialect "C++20"
+	cppdialect "C++17"
 	staticruntime "On"
 
 	files {"**.hpp", "**.cpp"}
