@@ -1,11 +1,10 @@
 #include <iostream>
-#include <string>
-#include <typeinfo>
+#ifndef VECTOR_MAX_ELEMENTS
+#define VECTOR_MAX_ELEMENTS 20
+#endif
 
-#define MAX_TESTS 10
-
-template<int val>
-struct Rank : Rank<val - 1> {
+template<int rank>
+struct Rank : Rank<rank - 1> {
 
 };
 
@@ -14,45 +13,64 @@ struct Rank<0> {
 
 };
 
-template<class... Tests>
-struct TestList {
-	static const int size = sizeof...(Tests);
+template<typename... Element>
+struct Vector {
+	static const int size = sizeof...(Element);
 };
 
-template<class Test, typename List>
+template<typename New, typename List>
 struct Append;
 
-template<class Test, class... List>
-struct Append<Test, TestList<List...>> {
-	using value_type = TestList<Test, List...>;
+template<typename New, typename... Element>
+struct Append<New, Vector<Element...>> {
+	using type_value = Vector<Element..., New>;
 };
 
-TestList<> GetTests(Rank<0>) { return {}; }
+template< template<typename Type> class Function, typename List>
+struct ForEach;
 
-#define GET_REGISTERED_TESTS													\
-	decltype(GetTests(Rank<MAX_TESTS>()))
+template< template<typename Type> class Function, typename Current, typename... Remaining>
+struct ForEach<Function, Vector<Current, Remaining...>> {
+	void operator()() {
+		Function<Current>()();
+		ForEach<Function, Vector<Remaining...>>()();
+	}
+};
 
-#define REGISTER_TEST(test)														\
-	inline Append<Test1, GET_REGISTERED_TESTS>::value_type						\
-		GetTests(Rank<GET_REGISTERED_TESTS::size + 1>)							\
-		{																		\
-			return {};															\
-		}
+template<template<typename Type> class Function, typename Current>
+struct ForEach<Function, Vector<Current>> {
+	void operator()() {
+		Function<Current>()();
+	}
+};
 
+Vector<> GetTypes(Rank<0>) { return {}; }
 
+#define GET_VECTOR_TYPES()														\
+	decltype(GetTypes(Rank<VECTOR_MAX_ELEMENTS>()))
+
+#define ADD_VECTOR_ELEMENT(element) inline Append<element, GET_VECTOR_TYPES()>::type_value GetTypes(Rank<GET_VECTOR_TYPES()::size + 1>) { return {}; }
 
 class Test1 {
 
 };
-REGISTER_TEST(Test1)
+ADD_VECTOR_ELEMENT(Test1)
 
 class Test2 {
 
 };
-REGISTER_TEST(Test2)
+ADD_VECTOR_ELEMENT(Test2)
+
+template<typename Type>
+struct Function {
+	void operator()() {
+		std::cout << "Type: " << typeid(Type).name() << std::endl;
+	}
+};
 
 int main(int argc, char **argv) {
 //	std::cout << typeid(GET_REGISTERED_TESTS).name() << std::endl;
-	std::cout << GET_REGISTERED_TESTS::size << std::endl;
+//	std::cout << GET_VECTOR_TYPES()::size << std::endl;
+	ForEach<Function, GET_VECTOR_TYPES()>()();
 //	std::cout << std::endl;
 }

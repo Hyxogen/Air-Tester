@@ -32,6 +32,24 @@ struct Append<New, Vector<Element...>> {
 	using type_value = Vector<Element..., New>;
 };
 
+template< template<typename Type> class Function, typename List>
+struct ForEach;
+
+template< template<typename Type> class Function, typename Current, typename... Remaining>
+struct ForEach<Function, Vector<Current, Remaining...>> {
+	void operator()() {
+		Function<Current>()();
+		ForEach<Function, Vector<Remaining...>>()();
+	}
+};
+
+template<template<typename Type> class Function, typename Current>
+struct ForEach<Function, Vector<Current>> {
+	void operator()() {
+		Function<Current>()();
+	}
+};
+
 Vector<> GetTypes(Rank<0>) { return {}; }
 
 #define GET_VECTOR_TYPES()														\
