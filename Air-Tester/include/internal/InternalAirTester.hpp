@@ -4,7 +4,7 @@
 #include "Vector.hpp"
 
 extern "C" {
-#include "utils/mem_utils.h"
+#include "../../src/internal/utils/mem_utils.h"
 };
 
 #define AIR_TEST_CLASS_NAME(group, test) group##_##test##_test

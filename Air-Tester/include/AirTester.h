@@ -1,10 +1,10 @@
 #ifndef AIRTESTER_H
 #define AIRTESTER_H
-#include "internal/Test.hpp"
+#include "../src/internal/Test.hpp"
 #include "internal/InternalAirTester.hpp"
 
 extern "C" {
-#include "internal/utils/mem_utils.h"
+#include "../src/internal/utils/mem_utils.h"
 };
 
 #define AIR_NONFATAL_FAIL(message) \

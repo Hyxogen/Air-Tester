@@ -3,14 +3,20 @@ project "Air-Test"
 	staticruntime "On"
 
 	files {
-		"**.hpp",
-		"**.cpp",
-		"**.c",
-		"**.h"
+		"src/**.hpp",
+		"src/**.cpp",
+		"src/**.c",
+		"src/**.h",
+		"include/**.hpp",
+        "include/**.h"
 	}
 
 	flags {
 		"FatalCompileWarnings"
+	}
+
+	includedirs {
+		"include"
 	}
 
 	warnings "Extra"
