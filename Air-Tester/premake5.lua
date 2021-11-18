@@ -45,16 +45,16 @@ project "Air-Tester"
     		cppdialect "C++11"
 
 	filter "configurations:Debug"
-		defines {"DEBUG"}
+		defines {"AIR_TESTER_DEBUG"}
 		optimize "Debug"
 		symbols "On"
 
 	filter "configurations:Release"
-		defines {"RELEASE"}
+		defines {"AIR_TESTER_RELEASE"}
 		optimize "On"
 		symbols "On"
 
 	filter "configurations:Distribution"
-		defines {"DISTRIBUTION"}
+		defines {"AIR_TESTER_DISTRIBUTION"}
 		symbols "Off"
 		optimize "Full"

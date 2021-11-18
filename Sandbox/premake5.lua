@@ -22,16 +22,16 @@ project "Sandbox"
 	objdir ("%{wks.location}/bin/" .. outputdir .. "%{prj.name}/int")
 
 	filter "configurations:Debug"
-		defines {"DEBUG"}
+		defines {"AIR_TESTER_DEBUG"}
 		optimize "Debug"
 		symbols "On"
 
 	filter "configurations:Release"
-		defines {"RELEASE"}
+		defines {"AIR_TESTER_RELEASE"}
 		optimize "On"
 		symbols "On"
 
 	filter "configurations:Distribution"
-		defines {"DISTRIBUTION"}
+		defines {"AIR_TESTER_DISTRIBUTION"}
 		symbols "Off"
 		optimize "Full"
