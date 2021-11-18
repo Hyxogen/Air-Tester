@@ -2,7 +2,7 @@ workspace "Air-Tester"
 	architecture "x86_64"
 
 	configurations {"Debug", "Release", "Distribution"}
-	platforms {"Win64", "OSX"}
+	platforms {"osx", "Win64"}
 
 outputdir = "%{cfg.buildcfg}/%{cfg.system}/%{cfg.architecture}/"
 
