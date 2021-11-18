@@ -10,17 +10,17 @@ extern "C" {
 #define AIR_TEST_CLASS_NAME(group, test) group##_##test##_test
 #define AIR_TEST_CLASS_NAME_STR(group, test) #group "_" #test "_test"
 
-#define AIR_TEST_(group, test, parent)											\
-class AIR_TEST_CLASS_NAME(group, test) : public parent {						\
-public:																			\
-        AIR_TEST_CLASS_NAME(group, test)() = default;							\
-        ~AIR_TEST_CLASS_NAME(group, test)() = default;							\
-        																		\
-        void TestBody() override;												\
-        std::string GetTestName() override;										\
-};																				\
-std::string AIR_TEST_CLASS_NAME(group, test)::GetTestName() { return std::string(AIR_TEST_CLASS_NAME_STR(group, test)); }\
-ADD_VECTOR_ELEMENT(AIR_TEST_CLASS_NAME(group, test))							\
+#define AIR_TEST_(group, test, parent)																						\
+class AIR_TEST_CLASS_NAME(group, test) : public parent {																	\
+public:																														\
+        AIR_TEST_CLASS_NAME(group, test)() = default;																		\
+        ~AIR_TEST_CLASS_NAME(group, test)() = default;																		\
+        																													\
+        void TestBody() override;																							\
+        std::string GetTestName() override;																					\
+};																															\
+std::string AIR_TEST_CLASS_NAME(group, test)::GetTestName() { return std::string(AIR_TEST_CLASS_NAME_STR(group, test)); }	\
+ADD_VECTOR_ELEMENT(AIR_TEST_CLASS_NAME(group, test))																		\
 void AIR_TEST_CLASS_NAME(group, test)::TestBody()
 
 template<class Type>
