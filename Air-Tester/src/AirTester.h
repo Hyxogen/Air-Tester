@@ -7,6 +7,10 @@ extern "C" {
 #include "internal/utils/mem_utils.h"
 };
 
+#define AIR_NONFATAL_FAIL(message) \
+	std::cout << "Message: " << message << std::endl;\
+	m_FailedTests += 1;
+
 #define TEST(group, test) AIR_TEST(group, test)
 
 #define RUN_ALL_TESTS() AIR_RUN_ALL_TESTS()

@@ -9,8 +9,7 @@ extern "C" {
 
 /**
  * Todo AIR TESTER
- *  - Track how many bytes leaked
- *  - Print which test failed
+ * - Improve framework design (internalairtester now expects certain variables inside Test class which is bad)
  * Todo ft_printf
  * - Add tests for char specifier
  * - fully implement char specifier
