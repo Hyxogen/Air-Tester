@@ -3,6 +3,10 @@
 #include "internal/Test.hpp"
 #include "internal/InternalAirTester.hpp"
 
+extern "C" {
+#include "internal/utils/mem_utils.h"
+};
+
 #define TEST(group, test) AIR_TEST(group, test)
 
 #define RUN_ALL_TESTS() AIR_RUN_ALL_TESTS()
@@ -26,7 +30,7 @@
 
 #define AIR_EXPECT_EQUAL(val1, val2, file, line) AIR_TEST_EQUAL(val1, #val1, val2, #val2, AIR_NONFATAL_FAIL, file, line)
 
-#define AIR_EXPECT_NO_C_LEAK(function, file, line) AIR_TEST_UNFREED_MEM(function, #function, 0, AIR_NONFATAL_FAIL, file, line)
+#define AIR_EXPECT_NO_C_LEAK(function, file, line) AIR_TEST_UNFREED_MEM(function, #function, get_unfreed_bytes(), 0, AIR_NONFATAL_FAIL, file, line)
 //#define AIR_EXPECT_C_LEAK(function, file, line) AIR_TEST_UNFREED_MEM(function, #function, 0, AIR_NONFATAL_FAIL, file, line)
 
 #endif //AIRTESTER_H

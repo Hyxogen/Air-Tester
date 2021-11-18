@@ -44,7 +44,7 @@ void add_element_back(linked_list_t **list, linked_list_t *element) {
 	temp->m_Next = element;
 }
 
-void remove_elements(linked_list_t **list, bool_t (*equal)(const void *, const void *), const void *sample) {
+void remove_elements(linked_list_t **list, bool_t (*equal)(const void *, const void *), void *sample) {
 	linked_list_t *previous;
 	linked_list_t *current;
 
@@ -65,6 +65,14 @@ void remove_elements(linked_list_t **list, bool_t (*equal)(const void *, const v
 			free(current);
 			current = *list;
 		}
+	}
+}
+
+void for_each_element_data(const linked_list_t *list, bool_t (*func)(const void *, void *), void *data) {
+	while (list) {
+		if (func(list->m_Content, data))
+			break;
+		list = list->m_Next;
 	}
 }
 

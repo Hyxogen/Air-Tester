@@ -30,18 +30,38 @@ struct ExecuteTest {
 	}
 };
 
+template<typename LHS, typename RHS>
+bool IsEqual(LHS lhs, RHS rhs) {
+	return lhs == rhs;
+}
+
+template<>
+bool IsEqual(const char* str1, const char* str2) {
+	return (!strcmp(str1, str2));
+}
+
+template<>
+bool IsEqual(unsigned long lhs, int rhs) {
+	return ((rhs >= 0) && ((unsigned long) rhs == lhs));
+}
+
+template<>
+bool IsEqual(int lhs, unsigned long rhs) {
+	return ((lhs >= 0) && ((unsigned long) lhs == rhs));
+}
+
 #define AIR_RUN_ALL_TESTS_() ForEach<ExecuteTest, GET_VECTOR_TYPES()>()()
 
-#define AIR_TEST_UNFREED_MEM(function, function_str, bytes, fail, file, line) \
+#define AIR_TEST_UNFREED_MEM(function, function_str, actual, expected, fail, file, line) \
     clear_tracked_memory();                                                  \
     function;                                                                          \
-	if (get_unfreed_count() == bytes)                                             \
+	if (IsEqual(actual, expected))                                             \
 		;\
 	else\
-		fail("Failed test. Expected " #bytes " bytes of unfreed memory. Actual TO BE FILLED IN")
+		fail("Failed test. Expected " #expected " bytes of unfreed memory. Actual " << actual << " bytes")
 
 #define AIR_TEST_EQUAL(val1, val1_str, val2, val2_str, fail, file, line) \
-	if (val1 == val2) \
+	if (IsEqual(val1, val2)) \
 		; \
 	else \
 		fail("Failed test. Expected: " #val1 "(" #val1_str ") to be equal to: " #val2 "(" #val2_str "). Actual: is not equal")

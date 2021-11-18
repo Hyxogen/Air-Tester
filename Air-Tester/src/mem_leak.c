@@ -4,5 +4,6 @@
 
 void function_that_leaks() {
 	char* v = malloc(5);
+//	free(v);
 	(void)v;
 }

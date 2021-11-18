@@ -7,6 +7,19 @@ extern "C" {
 #include "mem_leak.h"
 }
 
+/**
+ * Todo AIR TESTER
+ *  - Track how many bytes leaked
+ *  - Print which test failed
+ * Todo ft_printf
+ * - Add tests for char specifier
+ * - fully implement char specifier
+ * - Add tests for string specifier
+ * - fully implement string specifier
+ * - Add tests for signed int specifier
+ * - fully implement signed int specifier
+ */
+
 TEST(simple_tests, equal) {
 	std::cout << "Test!" << std::endl;
 	EXPECT_TRUE(true == true);
@@ -15,6 +28,8 @@ TEST(simple_tests, equal) {
 	EXPECT_FALSE(true == false);
 	EXPECT_EQUAL(5, 6);
 	EXPECT_EQUAL(5, 5);
+	EXPECT_EQUAL("Abc", "Abc");
+	EXPECT_EQUAL("Abc", "abc");
 	EXPECT_NO_C_LEAK(function_that_leaks())
 }
 
