@@ -5,7 +5,7 @@
 
 extern "C" {
 #include "../src/internal/utils/mem_utils.h"
-};
+}
 
 #define AIR_NONFATAL_FAIL(message) \
 	std::cout << "Message: " << message << std::endl;\

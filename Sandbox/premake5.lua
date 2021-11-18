@@ -6,8 +6,20 @@ project "Sandbox"
 
 	files {"**.hpp", "**.cpp"}
 
-	targetdir ("${wks.location}" .. outputdir .. "%{prj.name}")
-	objdir ("${wks.location}" .. outputdir .. "%{prj.name}/int")
+	dependson {
+		"Air-Tester"
+	}
+
+	links {
+		"Air-Tester"
+	}
+
+	includedirs {
+		"%{wks.location}/Air-Tester/include"
+	}
+
+	targetdir ("%{wks.location}/bin/" .. outputdir .. "%{prj.name}")
+	objdir ("%{wks.location}/bin/" .. outputdir .. "%{prj.name}/int")
 
 	filter "configurations:Debug"
 		defines {"DEBUG"}

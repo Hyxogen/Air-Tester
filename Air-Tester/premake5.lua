@@ -1,5 +1,5 @@
-project "Air-Test"
-	kind "ConsoleApp"
+project "Air-Tester"
+	kind "StaticLib"
 	staticruntime "On"
 
 	files {
@@ -21,8 +21,8 @@ project "Air-Test"
 
 	warnings "Extra"
 
-	targetdir ("${wks.location}" .. outputdir .. "%{prj.name}")
-	objdir ("${wks.location}" .. outputdir .. "%{prj.name}/int")
+	targetdir ("%{wks.location}/bin/" .. outputdir .. "%{prj.name}")
+	objdir ("%{wks.location}/bin/" .. outputdir .. "%{prj.name}/int")
 
 	defines {
 		"AIR_TRACK_MEMORY"
