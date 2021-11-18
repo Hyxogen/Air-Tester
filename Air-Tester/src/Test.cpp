@@ -8,8 +8,6 @@ extern "C" {
 }
 
 /**
- * Todo AIR TESTER
- * - Improve framework design (internalairtester now expects certain variables inside Test class which is bad)
  * Todo ft_printf
  * - Add tests for char specifier
  * - fully implement char specifier
@@ -29,6 +27,8 @@ TEST(simple_tests, equal) {
 	EXPECT_EQUAL(5, 5);
 	EXPECT_EQUAL("Abc", "Abc");
 	EXPECT_EQUAL("Abc", "abc");
+	EXPECT_NOT_EQUAL("Abc", "Abc");
+	EXPECT_NOT_EQUAL("Abc", "abc");
 	EXPECT_NO_C_LEAK(function_that_leaks())
 }
 

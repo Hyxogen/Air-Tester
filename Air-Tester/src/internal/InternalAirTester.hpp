@@ -67,6 +67,14 @@ bool IsEqual(int lhs, unsigned long rhs) {
 	else {\
         fail("Failed test. Expected: " #val1 "(" #val1_str ") to be equal to: " #val2 "(" #val2_str "). Actual: is not equal") \
     }
+
+#define AIR_TEST_NOT_EQUAL(val1, val1_str, val2, val2_str, fail, file, line) \
+	if (!IsEqual(val1, val2)) \
+		; \
+	else {\
+        fail("Failed test. Expected: " #val1 "(" #val1_str ") to be not equal to: " #val2 "(" #val2_str "). Actual: is equal") \
+    }
+
 #define AIR_TEST_BOOL(condition, condition_str, actual, expected, fail, file, line) \
 	if (condition == expected) \
 		; \
