@@ -109,6 +109,7 @@ bool IsEqual(int lhs, unsigned long rhs) {
 	{                                                                                   \
     	int func1_fd_cpy, func2_fd_cpy;                                                \
     	int pipe_vals[2];                                                               \
+        char eof;                                                                            \
     	char func1_buffer[AIR_READ_BUFFER_SIZE];                                        \
     	char func2_buffer[AIR_READ_BUFFER_SIZE];                                        \
     	ssize_t func1_read;                                                             \
@@ -117,18 +118,18 @@ bool IsEqual(int lhs, unsigned long rhs) {
     	func1_fd_cpy = dup(1);                                                                \
     	func2_fd_cpy = dup(2);                                                                \
                                                                                     \
-        setbuf(stdout, 0);                                                                            \
-        setbuf(stderr, 0);                                                                            \
-                                                                                     \
+        eof = EOF;                                                                             \
         ASSERT(pipe(pipe_vals) != -1);                                                     \
         ASSERT(dup2(pipe_vals[1], func1_fd) != -1);                                                \
         func1;                                                                             \
-        ASSERT((func1_read = read(pipe_vals[0], &func1_buffer[0], AIR_READ_BUFFER_SIZE)) >= 0);\
-        func1_buffer[func1_read] = '\0';                                             \
+        write(func1_fd, &eof, 1);                                                                            \
+        ASSERT((func1_read = read(pipe_vals[0], &func1_buffer[0], AIR_READ_BUFFER_SIZE)) > 0);\
+        func1_buffer[func1_read - 1] = '\0';                                             \
         ASSERT(dup2(pipe_vals[1], func2_fd) != -1);                                  \
         func2;\
-        ASSERT((func2_read = read(pipe_vals[0], &func2_buffer[0], AIR_READ_BUFFER_SIZE)) >= 0);\
-    	func2_buffer[func2_read] = '\0';                                                \
+        write(func1_fd, &eof, 1);                                                                            \
+        ASSERT((func2_read = read(pipe_vals[0], &func2_buffer[0], AIR_READ_BUFFER_SIZE)) > 0);\
+    	func2_buffer[func2_read - 1] = '\0';                                                \
     	ASSERT(dup2(func1_fd_cpy, func1_fd) != -1);\
     	ASSERT(dup2(func2_fd_cpy, func2_fd) != -1);\
     	close(pipe_vals[0]);                                                            \
