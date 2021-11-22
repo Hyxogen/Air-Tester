@@ -118,6 +118,9 @@ bool IsEqual(int lhs, unsigned long rhs) {
     	func1_fd_cpy = dup(1);                                                                \
     	func2_fd_cpy = dup(2);                                                                \
                                                                                     \
+        setbuf(stdout, 0);                                                          \
+        setbuf(stderr, 0);\
+                                                                                    \
         eof = EOF;                                                                             \
         ASSERT(pipe(pipe_vals) != -1);                                                     \
         ASSERT(dup2(pipe_vals[1], func1_fd) != -1);                                                \
@@ -137,7 +140,7 @@ bool IsEqual(int lhs, unsigned long rhs) {
     	if (IsEqual(&func1_buffer[0], &func2_buffer[0]) == equal)                                \
     		;                                                                              \
     	else {                                                                          \
-        	fail("Failed tests. Expected: \"" << &func1_buffer[0] << "\" (" #func1 ") got: \"" << &func2_buffer[0] << "\" (" #func2 ")")                                                                            \
+        	fail("Failed tests. Expected: \"" << &func1_buffer[0] << "\" (" #func1 ") got: \"" << &func2_buffer[0] << "\" (" #func2 ") file:" #file " line:" #line)                                                                            \
     	}\
 	}
 #endif //INTERNALAIRTESTER_H
