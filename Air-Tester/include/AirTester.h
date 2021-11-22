@@ -21,6 +21,8 @@ extern "C" {
 #define EXPECT_EQUAL(val1, val2) AIR_EXPECT_EQUAL(val1, val2, __FILE__, __LINE__)
 #define EXPECT_NOT_EQUAL(val1, val2) AIR_EXPECT_NOT_EQUAL(val1, val2, __FILE__, __LINE)
 
+#define EXPECT_SAME_STDOUT(func1, func2) AIR_EXPECT_SAME_STDOUT(func1, func2, __FILE__, __LINE__)
+
 #define EXPECT_NO_C_LEAK(function) AIR_EXPECT_NO_C_LEAK(function, __FILE__, __LINE__)
 //#define EXPECT_C_LEAK(function) AIR_EXPECT_C_LEAK(function, __FILE__, __LINE__)
 
@@ -33,6 +35,8 @@ extern "C" {
 
 #define AIR_EXPECT_EQUAL(val1, val2, file, line) AIR_TEST_EQUAL(val1, #val1, val2, #val2, AIR_NONFATAL_FAIL, file, line)
 #define AIR_EXPECT_NOT_EQUAL(val1, val2, file, line) AIR_TEST_NOT_EQUAL(val1, #val1, val2, #val2, AIR_NONFATAL_FAIL, file, line)
+
+#define AIR_EXPECT_SAME_STDOUT(func1, func2, file, line) AIR_TEST_FD_OUT_(func1, func2, 1, 1, true, AIR_NONFATAL_FAIL, file, line)
 
 #define AIR_EXPECT_NO_C_LEAK(function, file, line) AIR_TEST_UNFREED_MEM(function, #function, get_unfreed_bytes(), 0, AIR_NONFATAL_FAIL, file, line)
 //#define AIR_EXPECT_C_LEAK(function, file, line) AIR_TEST_UNFREED_MEM(function, #function, 0, AIR_NONFATAL_FAIL, file, line)
