@@ -1,7 +1,7 @@
 #include <dlfcn.h>
 #include "mem_utils.h"
 #include "linked_list.h"
-#include "assert.h"
+#include "../../../include/internal/Assert.h"
 #include <stdio.h>
 
 static linked_list_t *g_linked_list = NULL;
