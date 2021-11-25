@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <string>
+#include <iterator>
 
 class Test;
 class TestGroup;
@@ -10,10 +11,12 @@ typedef std::vector<Test*> TestList;
 typedef std::vector<TestGroup*> GroupList;
 
 class TestGroup {
+protected:
 	int			m_FailedTests;
+private:
 	TestList*	m_Tests;
 public:
-	std::string m_Name;
+	const std::string m_Name;
 
 	TestGroup(std::string name);
 	~TestGroup();
@@ -26,17 +29,25 @@ public:
 
 	inline int GetFailedTests() { return m_FailedTests;	}
 
+	TestList::iterator begin() { return m_Tests->begin(); }
+	TestList::iterator end() { return m_Tests->end(); }
 private:
 	void CleanUp();
 };
 
 class Test {
-public:
-	virtual ~Test();
 protected:
+	int m_Failed = 0;
+
 	Test();
 public:
+	virtual ~Test();
+
 	virtual void TestBody() = 0;
+
+	virtual std::string GetName() = 0;
+
+	inline int GetFailedCount() { return m_Failed; }
 };
 
 class AirTester {
@@ -63,7 +74,7 @@ Test* RegisterTest(std::string groupName) {
 	return test;
 }
 
-#define TEST_CLASS_NAME(group, unit) test_##group##_unit
+#define TEST_CLASS_NAME(group, unit) test_##group##_##unit
 
 #define TEST(group, unit) \
 class TEST_CLASS_NAME(group, unit) : public Test {\
@@ -72,6 +83,8 @@ private:\
 public:\
 	TEST_CLASS_NAME(group, unit)() = default;\
 	void TestBody() override;\
+	std::string GetName() override;\
 };\
+std::string TEST_CLASS_NAME(group, unit)::GetName() { return #unit; }\
 Test const *TEST_CLASS_NAME(group, unit)::test_executor = RegisterTest<TEST_CLASS_NAME(group, unit)>(#group);\
 void TEST_CLASS_NAME(group, unit)::TestBody()

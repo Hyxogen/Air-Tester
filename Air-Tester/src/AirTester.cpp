@@ -1,4 +1,5 @@
 #include "AirTester.h"
+#include <iostream>
 
 AirTester::AirTester() {
 	m_Groups = new GroupList();
@@ -10,7 +11,15 @@ AirTester::~AirTester() {
 
 void AirTester::RunAll() {
 	for (TestGroup* group : *m_Groups) {
-		group->RunAllTests();
+		std::cout << group->m_Name << ":\t";
+		for (Test* test : *group) {
+			test->TestBody();
+			if (!test->GetFailedCount())
+				std::cout << "OK ";
+			else
+				std::cout << "KO[" << test->GetFailedCount() << "] ";
+		}
+		std::cout << std::endl;
 	}
 }
 
