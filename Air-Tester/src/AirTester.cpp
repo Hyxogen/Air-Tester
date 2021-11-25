@@ -1,11 +1,12 @@
 #include "AirTester.h"
 #include <iostream>
 #include "event/PrettyResultPrinter.hpp"
-
+#include "event/BriefResultPrinter.hpp"
 
 AirTester::AirTester() {
 	m_Groups = new GroupList();
-	m_EventListener = new tester::event::PrettyResultPrinter();
+	// m_EventListener = new tester::event::PrettyResultPrinter();
+	m_EventListener = new tester::event::BriefResultPrinter();
 }
 
 AirTester::~AirTester() {
@@ -36,6 +37,10 @@ TestGroup* AirTester::GetTestGroup(std::string name) {
 TestGroup* AirTester::AddTestGroup(TestGroup* testGroup) {
 	m_Groups->push_back(testGroup);
 	return (testGroup);
+}
+
+const tester::event::AirEventListener* AirTester::GetEventListener() const {
+	return m_EventListener;
 }
 
 AirTester* AirTester::GetInstance() {

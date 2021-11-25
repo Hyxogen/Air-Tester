@@ -4,9 +4,9 @@
 namespace tester {
 	namespace event {
 
-		class PrettyResultPrinter : public AirEventListener {
+		class BriefResultPrinter : public AirEventListener {
 		public:
-			PrettyResultPrinter();
+			BriefResultPrinter();
 
 			void OnTesterStart() const override;
 

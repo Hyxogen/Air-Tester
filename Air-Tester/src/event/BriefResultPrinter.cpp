@@ -1,4 +1,4 @@
-#include "PrettyResultPrinter.hpp"
+#include "BriefResultPrinter.hpp"
 #include <iostream>
 #include "internal/InternalAirTester.hpp"
 
@@ -34,40 +34,42 @@ WHITE="\033[1;37m"
 namespace tester {
 	namespace event {
 
-		PrettyResultPrinter::PrettyResultPrinter() {
+		BriefResultPrinter::BriefResultPrinter() {
 
 		}
 
-		void PrettyResultPrinter::OnTesterStart() const {
+		void BriefResultPrinter::OnTesterStart() const {
 
 		}
 
-		void PrettyResultPrinter::OnTesterStop() const {
+		void BriefResultPrinter::OnTesterStop() const {
 
 		}
 
-		void PrettyResultPrinter::OnTestGroupStart(TestGroup* testGroup) const {
-			std::cout << ANSII_COLOR_GREEN << "[---------] " << ANSII_RESET << testGroup->m_Name << std::endl;	
+		void BriefResultPrinter::OnTestGroupStart(TestGroup* testGroup) const {
+			std::cout << testGroup->m_Name << ":\t\t";	
 		}
 
-		void PrettyResultPrinter::OnTestStart(Test* test) const {
-			std::cout << ANSII_COLOR_GREEN << "[ RUN     ] " << ANSII_RESET << test->GetName() << std::endl;
+		void BriefResultPrinter::OnTestStart(Test* test) const {
+			(void)test;
 		}
 
-		void PrettyResultPrinter::OnTestGroupFinish(TestGroup* testGroup) const {
+		void BriefResultPrinter::OnTestGroupFinish(TestGroup* testGroup) const {
 			(void)testGroup;
-			std::cout << ANSII_COLOR_GREEN << "[---------]" << std::endl;
+			std::cout << std::endl;
 		}
 
-		void PrettyResultPrinter::OnTestFinish(Test* test) const {
+		void BriefResultPrinter::OnTestFinish(Test* test) const {
 			if (!test->GetFailedCount())
-				std::cout << ANSII_COLOR_GREEN << "[      OK ] " << ANSII_RESET << std::endl;
+				std::cout << ANSII_COLOR_GREEN << "OK " << ANSII_RESET;
 			else
-				std::cout << ANSII_COLOR_RED << "[      KO ] " << ANSII_RESET << std::endl;
+				std::cout << ANSII_COLOR_RED << "KO " << ANSII_RESET;
 		}
 
-		void PrettyResultPrinter::OnError(std::string file, int line, std::string message) const {
-			std::cout << file << ":" << line << " error: " << message << std::endl;
+		void BriefResultPrinter::OnError(std::string file, int line, std::string message) const {
+			(void)file;
+			(void)line;
+			(void)message;
 		}
 	}
 }
