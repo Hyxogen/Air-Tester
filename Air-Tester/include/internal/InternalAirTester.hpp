@@ -3,12 +3,16 @@
 #include <vector>
 #include <string>
 #include <iterator>
+#include "../../src/event/AirEventListener.hpp"
 
 class Test;
 class TestGroup;
 
 typedef std::vector<Test*> TestList;
 typedef std::vector<TestGroup*> GroupList;
+
+#define AIR_NONFATAL_FAIL(file, line, message)\
+	AirTester::GetInstance()->GetEventListener()->OnError(file, line, message);
 
 class TestGroup {
 protected:
@@ -52,7 +56,8 @@ public:
 
 class AirTester {
 private:
-	GroupList*	m_Groups;
+	GroupList						*m_Groups;
+	tester::event::AirEventListener	*m_EventListener;
 
 	AirTester();
 	~AirTester();
@@ -60,6 +65,8 @@ public:
 	void RunAll();
 
 	TestGroup* GetTestGroup(std::string name);
+
+	const tester::event::AirEventListener* GetEventListener() const;
 
 	static AirTester* GetInstance();
 
@@ -76,11 +83,12 @@ Test* RegisterTest(std::string groupName) {
 
 #define TEST_CLASS_NAME(group, unit) test_##group##_##unit
 
-#define AIR_TEST_BOOLEAN_(condition, conditionStr, expected, actual, file, line) \
+#define AIR_TEST_BOOLEAN_(condition, conditionStr, expected, actual, fail, file, line) \
     if (condition == expected) {\
 \
     } else {\
         m_Failed++;\
+		fail(file, line, "expected " #expected " actual " #actual " for " #conditionStr);\
     }
 
 #define AIR_TEST_(group, unit) \
