@@ -38,11 +38,11 @@ project "Air-Tester"
 
 	filter "files:**.cpp"
 		language "C++"
-		cppdialect "C++11"
+		cppdialect "C++17"
 
 	filter "files:**.hpp"
     		language "C++"
-    		cppdialect "C++11"
+    		cppdialect "C++17"
 
 	filter "configurations:Debug"
 		defines {"AIR_TESTER_DEBUG"}
