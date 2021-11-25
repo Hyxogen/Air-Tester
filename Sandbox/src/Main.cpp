@@ -6,6 +6,6 @@ TEST(simple_tests, test1) {
 }
 
 int main(int argc, char** argv) {
-
+	AirTester::GetInstance()->RunAll();
 	return 0;
 }
