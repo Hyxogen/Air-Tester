@@ -10,9 +10,9 @@ AirTester::~AirTester() {
 
 void AirTester::RunAll() {
 	std::vector<Test*>::iterator it;
-
-	for (it = m_Tests->begin(); it != m_Tests->end(), ++it) {
-		(*it)->TestBody();
+	
+	for (Test* test : *m_Tests) {
+		test->TestBody();
 	}
 }
 

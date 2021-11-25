@@ -500,3 +500,6 @@ FodyWeavers.xsd
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudio,visualstudiocode,clion+all
 premake5
+.vscode/
+null.d
+Makefile
