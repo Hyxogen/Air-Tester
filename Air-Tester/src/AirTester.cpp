@@ -11,8 +11,10 @@ AirTester::~AirTester() {
 void AirTester::RunAll() {
 	std::vector<Test*>::iterator it;
 	
-	for (Test* test : *m_Tests)
+	for (Test* test : *m_Tests) {
 		test->TestBody();
+		delete test;
+	}
 }
 
 Test* AirTester::AddTest(Test* test) {
@@ -29,4 +31,8 @@ AirTester* AirTester::GetInstance() {
 
 Test::Test() {
 
+}
+
+Test::~Test() {
+	
 }

@@ -3,6 +3,8 @@
 #include <vector>
 
 class Test {
+public:
+	virtual ~Test();
 protected:
 	Test();
 public:
@@ -36,7 +38,6 @@ private:\
 	static Test const *test_executor;\
 public:\
 	TEST_CLASS_NAME(group, unit)() = default;\
-\
 	void TestBody() override;\
 };\
 Test const *TEST_CLASS_NAME(group, unit)::test_executor = RegisterTest<TEST_CLASS_NAME(group, unit)>();\
