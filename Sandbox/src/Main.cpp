@@ -2,10 +2,12 @@
 #include <iostream>
 
 TEST(simple_tests, test1) {
+	EXPECT_TRUE(true);
 	// std::cout << "Hallo!" << std::endl;
 }
 
 TEST(simple_tests, test2) {
+	EXPECT_TRUE(false);
 	// std::cout << "Hallo!" << std::endl;
 }
 

@@ -11,15 +11,16 @@ AirTester::~AirTester() {
 
 void AirTester::RunAll() {
 	for (TestGroup* group : *m_Groups) {
-		std::cout << group->m_Name << ":\t";
+		std::cout << "[---------] " << group->m_Name << std::endl;
 		for (Test* test : *group) {
+			std::cout << "[ RUN     ] " << test->GetName() << std::endl;
 			test->TestBody();
 			if (!test->GetFailedCount())
-				std::cout << "OK ";
+				std::cout << "[      OK ] " << std::endl;
 			else
-				std::cout << "KO[" << test->GetFailedCount() << "] ";
+				std::cout << "[      KO ] " << std::endl;
 		}
-		std::cout << std::endl;
+		std::cout << "[---------]" << std::endl;
 	}
 }
 
