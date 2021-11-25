@@ -1,8 +1,11 @@
 #include "AirTester.h"
 #include <iostream>
+#include "event/PrettyResultPrinter.hpp"
+
 
 AirTester::AirTester() {
 	m_Groups = new GroupList();
+	m_EventListener = new tester::event::PrettyResultPrinter();
 }
 
 AirTester::~AirTester() {
@@ -11,16 +14,13 @@ AirTester::~AirTester() {
 
 void AirTester::RunAll() {
 	for (TestGroup* group : *m_Groups) {
-		std::cout << "[---------] " << group->m_Name << std::endl;
+		m_EventListener->OnTestGroupStart(group);
 		for (Test* test : *group) {
-			std::cout << "[ RUN     ] " << test->GetName() << std::endl;
+			m_EventListener->OnTestStart(test);
 			test->TestBody();
-			if (!test->GetFailedCount())
-				std::cout << "[      OK ] " << std::endl;
-			else
-				std::cout << "[      KO ] " << std::endl;
+			m_EventListener->OnTestFinish(test);
 		}
-		std::cout << "[---------]" << std::endl;
+		m_EventListener->OnTestGroupFinish(group);
 	}
 }
 

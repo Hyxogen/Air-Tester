@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include <iterator>
+#include "../../src/event/AirEventListener.hpp"
 
 class Test;
 class TestGroup;
@@ -52,7 +53,8 @@ public:
 
 class AirTester {
 private:
-	GroupList*	m_Groups;
+	GroupList						*m_Groups;
+	tester::event::AirEventListener	*m_EventListener;
 
 	AirTester();
 	~AirTester();
