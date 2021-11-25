@@ -499,6 +499,16 @@ FodyWeavers.xsd
 # Additional files built by Visual Studio
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudio,visualstudiocode,clion+all
+
+# Created by https://www.toptal.com/developers/gitignore/api/premake-gmake
+# Edit at https://www.toptal.com/developers/gitignore?templates=premake-gmake
+
+### premake-gmake ###
+Makefile
+*.make
+obj/
+
+# End of https://www.toptal.com/developers/gitignore/api/premake-gmake
 premake5
 .vscode/
 null.d
