@@ -47,7 +47,7 @@ namespace tester {
 		}
 
 		void BriefResultPrinter::OnTestGroupStart(TestGroup* testGroup) const {
-			std::cout << testGroup->m_Name << ":\t\t";	
+			std::cout << testGroup->m_Name << ": ";	
 		}
 
 		void BriefResultPrinter::OnTestStart(Test* test) const {

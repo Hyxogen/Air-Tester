@@ -14,6 +14,10 @@ typedef std::vector<TestGroup*> GroupList;
 #define AIR_NONFATAL_FAIL(file, line, message)\
 	AirTester::GetInstance()->GetEventListener()->OnError(file, line, message);
 
+#define AIR_FATAL_FAIL(file, line, message)\
+	AirTester::GetInstance()->GetEventListener()->OnError(file, line, message);\
+	return;
+
 class TestGroup {
 protected:
 	int			m_FailedTests;
